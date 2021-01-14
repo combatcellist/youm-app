@@ -9,7 +9,7 @@
          メニュー投稿
        </li>
       <li>
-         プロフィール
+         <%= link_to "プロフィール", new_profile_path %>
        </li>
         <li>
           <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>

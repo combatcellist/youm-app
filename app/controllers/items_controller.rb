@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   before_action :force_redirect_unless_my_item, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.all
+    @items = Item.all.order(created_at: :desc)
   end
 
   def new
@@ -14,7 +14,8 @@ class ItemsController < ApplicationController
   end
 
   def show
-    
+    @comment = Comment.new
+    @comments = @item.comments.includes(:user)
   end
   
   def edit

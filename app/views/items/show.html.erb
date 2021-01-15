@@ -1,0 +1,46 @@
+<div class="content-block">
+    <div class="content">
+      <div class="user-about">
+       <div class="image">
+       <% if @item.user.image.attached? %>
+        <%= image_tag @item.user.image %>
+       <% else %>
+        <%= image_tag "nouser.png"%>
+       <% end %>
+       </div> 
+
+       <div class="profile">
+          <div class="name-about">
+            <div class="name">
+              <%= @item.user.name %>
+            </div> 
+          </div>
+          
+        <div class="detail">
+          <%= @item.user.detail %>
+        </div>
+      </div>
+    </div>
+
+        <% if @item.images.attached? %>
+         <div class="images">
+         <% @item.images.each do |image| %>
+          <%= image_tag image %>
+          <% end %>
+         </div>
+        <% end %>
+
+
+        <div class="text">
+        <%= @item.content %>
+        </div>
+
+         <div class="action-menu">
+          <div class="comment">
+            コメント
+          </div>
+        </div>
+
+      
+    </div>
+  </div>

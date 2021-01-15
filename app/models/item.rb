@@ -1,10 +1,13 @@
 class Item < ApplicationRecord
-  validates :image
-  validates :name
-  validates :price, inclusion: { in: (300..9999999)}, format: {with: VALID＿PRICE_LEGEX}
+  
+  validates :name, presence: true
+  validates :price, presence: true
+  validates :content, presence: true
+  
+
+  belongs_to         :user
+  has_many_attached   :images
+
 end
 
-belongs_to         :user
-has_one_attached   :image
-has_one            :order
-end
+

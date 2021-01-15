@@ -1,4 +1,5 @@
-<div class="content-block">
+<div class="content-wrapper">
+  <div class="content-block">
     <div class="content">
       <div class="user-about">
        <div class="image">
@@ -30,17 +31,47 @@
          </div>
         <% end %>
 
+        <div class="menu-name">
+        <h2>[メニュー名]<%= @item.name %></h2>
+        </div>
+
+        <div class="menu-price">
+        <h2>[価格]<%= @item.price %>円</h2>
+        </div>
+
+
 
         <div class="text">
         <%= @item.content %>
         </div>
 
-         <div class="action-menu">
+        <div class="action-menu">
           <div class="comment">
-            コメント
-          </div>
-        </div>
-
-      
+            <% if user_signed_in? %>
+          <%= form_with model: @comment, url: item_comments_path(@item), local: true do |f| %>
+            <div class="field">
+              <%= f.label :text, "コメント" %><br />
+              <%= f.text_field :text %>
+            </div>
+            <div class="actions">
+              <%= f.submit "送信する", class: "button" %>
+            </div>
+          <% end %>
+         <% end %>
+         <ul class="comments_lists">
+         コメント一覧
+            <% if @comments.present? %>
+            <% @comments.each do |comment| %>
+              <li class="comments_list">
+                <%= comment.text %>
+                <%= link_to @item.user.name, item_path(@item), class: :comment_user %>
+              <% end %>
+              </li>
+          <% end %>
+         </ul>
+       </div>
+     </div>
+   </div>
     </div>
   </div>
+</div>

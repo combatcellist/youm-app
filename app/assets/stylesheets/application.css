@@ -22,12 +22,14 @@
 body {
   max-width: 1080px;
   margin: 0 auto;
+  background-color: #FFDEAD;
 }
 
 .logo a {
   font-weight: bold;
   font-size: 30px;
-  
+  text-decoration: none;
+  color: cadetblue;
 }
 
 #header {

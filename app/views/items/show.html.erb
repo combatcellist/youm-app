@@ -36,8 +36,22 @@
         </div>
 
         <div class="menu-price">
-        <h2>[価格]<%= @item.price %>円</h2>
+          <h2>[価格]<%= @item.price %>円</h2>
+          <%= form_with local: true, url: items_path do |form| %>
+                <script
+                  type="text/javascript"
+                  src="https://checkout.pay.jp"
+                  class="payjp-button"
+                  data-key="<%= ENV["PAYJP_PUBLIC_KEY"] %>">
+                </script>
+              <% end %>
+    
+        <% if user_signed_in? && current_user.id == @item.user_id %>
+        <div class="item__manage">
+          <%= link_to "編集する", edit_item_path(@item), class: :item__btn %>
+          <%= link_to "削除する", item_path(@item), method: :delete, data: { confirm: '削除しますか？' }, class: :item__btn %>
         </div>
+        <% end %>
 
 
 
@@ -48,7 +62,7 @@
         <div class="action-menu">
           <div class="comment">
             <% if user_signed_in? %>
-          <%= form_with model: @comment, url: item_comments_path(@item), local: true do |f| %>
+          <%= form_with url: item_comments_path(@item), model: @comment, local: true do |f| %>
             <div class="field">
               <%= f.label :text, "コメント" %><br />
               <%= f.text_field :text %>
@@ -58,17 +72,17 @@
             </div>
           <% end %>
          <% end %>
-         <ul class="comments_lists">
-         コメント一覧
+         <ol class="comments_lists">
             <% if @comments.present? %>
             <% @comments.each do |comment| %>
               <li class="comments_list">
                 <%= comment.text %>
-                <%= link_to @item.user.name, item_path(@item), class: :comment_user %>
+                <%= comment.user.name %>
+                <%= comment.created_at %>
               <% end %>
               </li>
           <% end %>
-         </ul>
+         </ol>
        </div>
      </div>
    </div>

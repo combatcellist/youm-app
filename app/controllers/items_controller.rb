@@ -1,8 +1,9 @@
 class ItemsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :find_item, only: [:show, :edit, :update, :destory]
-  before_action :force_redirect_unless_my_item, only: [:edit, :update, :destroy]
+  before_action :find_item, only: [:show, :edit, :update, :destroy, :pay]
+  # before_action :force_redirect_unless_my_item, only: [:edit, :update, :destroy, :search]
+
 
   def index
     @items = Item.all.order(created_at: :desc)
@@ -40,25 +41,42 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-   if @item.destroy
+  if @item.destroy
     redirect_to root_path, notice: "メニューが削除されました"
-   else
+  else
     redirect_to root_path, notice: "メニューを削除できませんでした"
    end
   end
 
+  def search
+    @items = Item.search(params[:keyword])
+  end
+
+  def pay
+   Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    Payjp::Charge.create(
+    amount: @item.price,
+    card: params['payjp-token'],
+    currency: 'jpy'
+    )
+    redirect_to root_path, notice: "購入しました"
+  end
+  
+
   private
 
   def item_params
-    params.require(:item).permit(:name, :price, :content, images:[]).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :price, :content, images: []).merge(user_id: current_user.id)
   end
   
   def find_item
     @item = Item.find(params[:id])
   end
 
-  def force_redirect_unless_my_item
-    return redirect_to root_path, alert: "自分のメニューではありません" if @item.user != current_user
-  end
+  #  def force_redirect_unless_my_item
+    #  return redirect_to root_path, alert: "自分のメニューではありません" if @item.user != current_user
+  #  end
+
+  
 
 end

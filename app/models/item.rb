@@ -1,13 +1,25 @@
 class Item < ApplicationRecord
   
-  validates :name, presence: true
-  validates :price, presence: true
-  validates :content, presence: true
+ with_options presence: true do
+    validates :name
+    validates :price
+    validates :content
+    validates :images
+ end
   
 
   belongs_to          :user
   has_many_attached   :images
-  has_many            :comments
+  has_many            :comments, dependent: :destroy
+
+  def self.search(search)
+   if search != ""
+     Item.where('text LIKE(?)', "%#{search}%")
+   else
+     Item.all
+   end
+ end
+
 
 end
 

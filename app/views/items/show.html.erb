@@ -37,15 +37,10 @@
 
         <div class="menu-price">
           <h2>[価格]<%= @item.price %>円</h2>
-          <%= form_with local: true, url: items_path do |form| %>
-                <script
-                  type="text/javascript"
-                  src="https://checkout.pay.jp"
-                  class="payjp-button"
-                  data-key="<%= ENV["PAYJP_PUBLIC_KEY"] %>">
-                </script>
-              <% end %>
-    
+           <h3><%= link_to '購入画面に進む', item_orders_path(@item), class:"item-red-btn" %></h3>
+        </div>
+
+       <div class="menu-price">    
         <% if user_signed_in? && current_user.id == @item.user_id %>
         <div class="item__manage">
           <%= link_to "編集する", edit_item_path(@item), class: :item__btn %>
@@ -53,17 +48,18 @@
         </div>
         <% end %>
 
-
-
         <div class="text">
         <%= @item.content %>
         </div>
 
+       
+       
+
         <div class="action-menu">
           <div class="comment">
             <% if user_signed_in? %>
-          <%= form_with url: item_comments_path(@item), model: @comment, local: true do |f| %>
-            <div class="field">
+          <%= form_with url: item_comments_path(@item), model: @comment, data: { confirm: '誹謗中傷など、読む人が不快になるような内容は含まれていませんか？' },　local: true do |f| %>
+            <div class="field"><br>
               <%= f.label :text, "コメント" %><br />
               <%= f.text_field :text %>
             </div>

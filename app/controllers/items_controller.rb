@@ -52,15 +52,7 @@ class ItemsController < ApplicationController
     @items = Item.search(params[:keyword])
   end
 
-  def pay
-   Payjp.api_key = ENV['PAYJP_SECRET_KEY']
-    Payjp::Charge.create(
-    amount: @item.price,
-    card: params['payjp-token'],
-    currency: 'jpy'
-    )
-    redirect_to root_path, notice: "購入しました"
-  end
+  
   
 
   private

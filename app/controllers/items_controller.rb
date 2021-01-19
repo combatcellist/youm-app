@@ -2,8 +2,7 @@ class ItemsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :find_item, only: [:show, :edit, :update, :destroy, :pay]
-  # before_action :force_redirect_unless_my_item, only: [:edit, :update, :destroy, :search]
-
+  
 
   def index
     @items = Item.all.order(created_at: :desc)

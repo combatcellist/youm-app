@@ -48,9 +48,6 @@
         .detail {
           width: 100%;
         }
-        comments_list {
-          display: inline;
-        }
       }
     }
   }
@@ -62,7 +59,7 @@
 #items-new, #items-edit, #items-create, #items-update {
   form {
     textarea{
-      width: 100%;
+      width: 90%;
       height: 300px;
       padding: 5px;
       border-radius: 5px;

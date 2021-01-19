@@ -1,11 +1,6 @@
 <div class="content-wrapper">
   <div class="content-block">
-  <% if user_signed_in? %>
-      <div class="greeting">
-        <%= "こんにちは、" %>
-        <%= "#{current_user.name}さん♪" %>
-      </div>
-    <% end %>
+  
 
   
   <% @items.each do |item| %>

@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all.order(created_at: :desc)
+    @item = Item.search(params[:search])
   end
 
   def new

@@ -56,3 +56,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'payjp'
 gem 'ransack'
+gem "aws-sdk-s3", require: false

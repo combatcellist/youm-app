@@ -14,13 +14,12 @@ class Item < ApplicationRecord
   has_one             :order
 
   def self.search(search)
-   if search != ""
-     Item.where('text LIKE(?)', "%#{search}%")
-   else
-     Item.all
-   end
- end
-
+    if search != ""
+      Item.where('content LIKE(?)', "%#{search}%")
+    else
+      Item.all
+    end
+  end
 
 end
 
